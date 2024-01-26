@@ -1,0 +1,14 @@
+{
+  "name": "website-scraper",
+  "version": "1.0.0",
+  "description": "Website Scraper",
+  "main": "index.js",
+  "type": "module",
+  "author": "HuyPaul",
+  "license": "MIT",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.12",
+    "fs": "^0.0.1-security",
+    "puppeteer": "^21.9.0"
+  }
+}
