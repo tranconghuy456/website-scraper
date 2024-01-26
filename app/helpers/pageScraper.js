@@ -58,7 +58,6 @@ const multiPage = {
       new Promise(async (resolve, reject) => {
         console.log(`+ Navigating to ${productLink} ...`);
         let productPage = await browser.newPage();
-
         await productPage.goto(productLink, {
           waitUntil: "load",
           timeout: 60000,
@@ -263,112 +262,190 @@ const multiPage = {
         var variations = await productPage.$$eval(
           ".pd-config-container",
           (container) => {
+            var id = Math.random().toString(36).substring(8);
             var configs = document.querySelectorAll(".pd-config-group");
             let payload = [];
-            let attrObject = {};
+            var object = {};
 
-            if (configs.length > 0) {
-              for (let [index, config] of configs.entries()) {
-                let attributes = config.querySelectorAll(
-                  ".config-group-holder a"
-                );
-                let object = {
-                  id: index,
-                  sku:
-                    `#${document
-                      .querySelector(".blog-middle div.text-12 a")
-                      ?.textContent.trim()}` || "#PRODUCT",
-                  parent_sku:
-                    `#${document
-                      .querySelector(".blog-middle div.text-12 a")
-                      ?.textContent.trim()}` || "#PRODUCT",
-                  name:
-                    document
-                      .querySelector(".blog-middle h1")
-                      ?.textContent.trim() || "Updating ...",
-                  description: "No description for this product.",
-                  short_description: "No short description for this product.",
-                  breadcrumb: [
-                    ...document.querySelectorAll(".global-breadcrumb ol a"),
-                  ]
-                    .map((text) => {
-                      if (text) return `${text.textContent.trim()}`;
-                      return "Updating ...";
-                    })
-                    .toString()
-                    .replaceAll(",", ">"),
-                  images: [
-                    ...document.querySelectorAll(
-                      ".product-detail-group a[data-fancybox='gallery'"
-                    ),
-                  ].map((img) => {
+            // for (let i = 0; i < 0; i++) {
+            if (configs.length >= 1) {
+              var attributes_1 = configs[0].querySelectorAll(
+                ".config-group-holder a"
+              );
+              object = {
+                id,
+                sku: `#${
+                  document.querySelector(".blog-middle div.text-12 a")
+                    ? document
+                        .querySelector(".blog-middle div.text-12 a")
+                        .textContent.trim()
+                    : "PRODUCT"
+                }`,
+                name:
+                  document
+                    .querySelector(".blog-middle h1")
+                    ?.textContent.trim() || "Updating ...",
+                description: "No description for this product.",
+                short_description: "No short description for this product.",
+                breadcrumb: [
+                  ...document.querySelectorAll(".global-breadcrumb ol a"),
+                ]
+                  .map((text) => {
+                    if (text) return `${text.textContent.trim()}`;
+                    return "Updating ...";
+                  })
+                  .toString()
+                  .replaceAll(",", ">"),
+                images: [
+                  ...document.querySelectorAll(
+                    ".product-detail-group a[data-fancybox='gallery'"
+                  ),
+                ]
+                  .map((img) => {
                     if (img) return img.href;
                     return "Updating ...";
-                  }),
+                  })
+                  .toString(),
+              };
+
+              for (let j = 0; j < attributes_1.length; j++) {
+                attributes_1[j].click();
+
+                object = {
+                  ...object,
+                  attribute_1_value: attributes_1[j].textContent.trim(),
+                  regular_price: document
+                    .querySelector(".pd-price-container b.text-32")
+                    .textContent.trim(),
                 };
-
-                attributes.forEach((attribute, key) => {
-                  attribute.click();
-
-                  object = {
-                    ...object,
-                    [`attribute_${index}_name`]: config
-                      .querySelector("p")
-                      .textContent.trim(),
-                    [`attribute_${index}_value`]: attribute.textContent.trim(),
-                  };
-                });
-                payload.push(object);
-
-                // for (let [ydex, attribute_1] of attributes.entries()) {
-                //   attribute_1.click();
-                //   object = {
-                //     ...object,
-                //     [`attribute_${index}_name`]: config
-                //       .querySelector("p")
-                //       .textContent.trim(),
-                //     [`attribute_${index}_value`]:
-                //       attribute_1.textContent.trim(),
-                //   };
-
-                //   if (configs.length > 1) {
-                //     // let attributes_1 = ;
-                //     // object = { attributes_1, key: configs[index + 1], index };
-                //     for (let [xdex, attribute_2] of config
-                //       .querySelectorAll(".config-group-holder a")
-                //       .entries()) {
-                //       attribute_2.click();
-                //       object = {
-                //         ...object,
-                //         [`attribute_${index}_name`]: config
-                //           .querySelector("p")
-                //           .textContent.trim(),
-                //         [`attribute_${index}_value`]:
-                //           attribute_2.textContent.trim(),
-                //       };
-                //     }
-                //   }
-
-                //   object = {
-                //     ...object,
-                //     regular_price: document
-                //       .querySelector(".pd-price-container b")
-                //       .textContent.trim(),
-                //   };
-                //   payload.push(object);
-                // }
               }
             }
+
+            for (var i = 1; i < configs.length; i++) {
+              var attributes_2 = configs[i].querySelectorAll(
+                ".config-group-holder a"
+              );
+              for (let k = 0; k < attributes_2.length; k++) {
+                attributes_2[k].click();
+
+                object = {
+                  ...object,
+                  [`attribute_${i + 1}_value`]:
+                    attributes_2[k].textContent.trim(),
+                  regular_price: document
+                    .querySelector(".pd-price-container b.text-32")
+                    .textContent.trim(),
+                };
+              }
+            }
+
+            payload.push(object);
+
+            // if (configs.length > 0) {
+            //   // for (let [index, config] of configs.entries()) {
+            //   //   let attributes = config.querySelectorAll(
+            //   //     ".config-group-holder a"
+            //   //   );
+            //   //   let object = {
+            //   //     id: index,
+            //   //     sku:
+            //   //       `#${document
+            //   //         .querySelector(".blog-middle div.text-12 a")
+            //   //         ?.textContent.trim()}` || "#PRODUCT",
+            //   //     parent_sku:
+            //   //       `#${document
+            //   //         .querySelector(".blog-middle div.text-12 a")
+            //   //         ?.textContent.trim()}` || "#PRODUCT",
+            //   //     name:
+            //   //       document
+            //   //         .querySelector(".blog-middle h1")
+            //   //         ?.textContent.trim() || "Updating ...",
+            //   //     description: "No description for this product.",
+            //   //     short_description: "No short description for this product.",
+            //   //     breadcrumb: [
+            //   //       ...document.querySelectorAll(".global-breadcrumb ol a"),
+            //   //     ]
+            //   //       .map((text) => {
+            //   //         if (text) return `${text.textContent.trim()}`;
+            //   //         return "Updating ...";
+            //   //       })
+            //   //       .toString()
+            //   //       .replaceAll(",", ">"),
+            //   //     images: [
+            //   //       ...document.querySelectorAll(
+            //   //         ".product-detail-group a[data-fancybox='gallery'"
+            //   //       ),
+            //   //     ].map((img) => {
+            //   //       if (img) return img.href;
+            //   //       return "Updating ...";
+            //   //     }),
+            //   //   };
+
+            //   //   // attributes.forEach((attribute, key) => {
+            //   //   //   attribute.click();
+
+            //   //   //   object = {
+            //   //   //     ...object,
+            //   //   //     [`attribute_${index}_name`]: config
+            //   //   //       .querySelector("p")
+            //   //   //       .textContent.trim(),
+            //   //   //     [`attribute_${index}_value`]: attribute.textContent.trim(),
+            //   //   //   };
+            //   //   // });
+
+            //   //   for (let i = 0; i <= attributes.length; i++) {
+            //   //     for (let j = 0; )
+            //   //   }
+            //   //   payload.push(object);
+
+            //   //   // for (let [ydex, attribute_1] of attributes.entries()) {
+            //   //   //   attribute_1.click();
+            //   //   //   object = {
+            //   //   //     ...object,
+            //   //   //     [`attribute_${index}_name`]: config
+            //   //   //       .querySelector("p")
+            //   //   //       .textContent.trim(),
+            //   //   //     [`attribute_${index}_value`]:
+            //   //   //       attribute_1.textContent.trim(),
+            //   //   //   };
+
+            //   //   //   if (configs.length > 1) {
+            //   //   //     // let attributes_1 = ;
+            //   //   //     // object = { attributes_1, key: configs[index + 1], index };
+            //   //   //     for (let [xdex, attribute_2] of config
+            //   //   //       .querySelectorAll(".config-group-holder a")
+            //   //   //       .entries()) {
+            //   //   //       attribute_2.click();
+            //   //   //       object = {
+            //   //   //         ...object,
+            //   //   //         [`attribute_${index}_name`]: config
+            //   //   //           .querySelector("p")
+            //   //   //           .textContent.trim(),
+            //   //   //         [`attribute_${index}_value`]:
+            //   //   //           attribute_2.textContent.trim(),
+            //   //   //       };
+            //   //   //     }
+            //   //   //   }
+
+            //   //   //   object = {
+            //   //   //     ...object,
+            //   //   //     regular_price: document
+            //   //   //       .querySelector(".pd-price-container b")
+            //   //   //       .textContent.trim(),
+            //   //   //   };
+            //   //   //   payload.push(object);
+            //   //   // }
+            //   // }
+            // }
             return payload;
           }
         );
-        console.log(variations);
 
-        // this.categories[0][index][jdex] = {
-        //   ...this.categories[0][index][jdex],
-        //   variations,
-        // };
-        // console.log(this.categories[0][index][jdex]);
+        this.categories[0][index][jdex] = {
+          ...this.categories[0][index][jdex],
+          variations,
+        };
+        console.log(this.categories[0][index][jdex]);
         productPage.close();
         resolve(this.categories[0][index][jdex]);
       });
@@ -379,7 +456,7 @@ const multiPage = {
       // let categoryCurrentData = await categoryPromise(index, category.url);
       let categoryCurrentData = await categoryPromise(
         index,
-        this.categories[0][1].url
+        this.categories[0][index].url
       );
       //   console.log(categoryCurrentData);
       console.log(categoryCurrentData[0]);
