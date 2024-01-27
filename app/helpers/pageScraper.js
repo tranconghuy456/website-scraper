@@ -64,388 +64,115 @@ const multiPage = {
         });
         await productPage.waitForSelector(".product-detail-group");
 
-        // var variations = await productPage.$$eval(
-        //   ".pd-config-group",
-        //   (configs) => {
-        //     let payload = [];
-        //     for (var [count, config] of configs.entries()) {
-        //       console.log(count);
-        //       let attributes = config.querySelectorAll(
-        //         ".config-group-holder a"
-        //       );
-
-        //       for (var [index, attribute] of attributes.entries()) {
-        //         console.log(index);
-        //         attribute.click();
-        //         if (configs.length > 1) {
-        //           console.log(configs[count + 1]);
-        //           for (var [ydex, attribute_1] of configs[count + 1]
-        //             .querySelectorAll(".config-group-holder a")
-        //             .entries()) {
-        //             attribute_1.click();
-        //             payload.push({
-        //               id: count,
-        //               sku:
-        //                 "#" +
-        //                   document
-        //                     .querySelector(".blog-middle div.text-12 a")
-        //                     ?.textContent.trim()
-        //                     .replace(/(\r\n|\n|\r)/gm, "") || "#PRODUCT",
-        //               parent_sku:
-        //                 "#" +
-        //                   document
-        //                     .querySelector(".blog-middle div.text-12 a")
-        //                     ?.textContent.trim()
-        //                     .replace(/(\r\n|\n|\r)/gm, "") || "#PRODUCT",
-        //               name:
-        //                 document
-        //                   .querySelector(".blog-middle h1")
-        //                   .textContent.trim()
-        //                   .replace(/(\r\n|\n|\r)/gm, "") || "Updating ...",
-        //               regular_price:
-        //                 document
-        //                   .querySelector(".pd-price-container b")
-        //                   .textContent.trim()
-        //                   .replace(/(\r\n|\n|\r)/gm, "") || "Contact",
-        //               description:
-        //                 document.querySelector(".pro-desc-group")?.innerHTML ||
-        //                 "No description for this product",
-        //               short_description:
-        //                 "No short description for this product",
-        //               breadcrumb: [
-        //                 ...document.querySelectorAll(".global-breadcrumb ol a"),
-        //               ]
-        //                 .map((text) => {
-        //                   if (text)
-        //                     return `${text.textContent
-        //                       .trim()
-        //                       .replace(/(\r\n|\n|\r)/gm, "")}`;
-        //                   return "Updating";
-        //                 })
-        //                 .toString()
-        //                 .replaceAll(",", ">"),
-        //               images: [
-        //                 ...document.querySelectorAll(
-        //                   ".product-detail-group a[data-fancybox='gallery']"
-        //                 ),
-        //               ]
-        //                 .map((img) => {
-        //                   if (img) return img.href;
-        //                   return "Updating";
-        //                 })
-        //                 .toString(),
-        //               [`attribute_${count + 1}_name`]:
-        //                 config
-        //                   .querySelector("p")
-        //                   .textContent.trim()
-        //                   .replace(/(\r\n|\n|\r)/gm, "") || "",
-        //               [`attribute_${count}_value`]:
-        //                 attribute_1.textContent
-        //                   .trim()
-        //                   .replace(/(\r\n|\n|\r)/gm, "") || "",
-        //               [`attribute_${count + 1}_name`]:
-        //                 configs[count + 1]
-        //                   .querySelector("p")
-        //                   .textContent.trim()
-        //                   .replace(/(\r\n|\n|\r)/gm, "") || "",
-        //               [`attribute_${count + 1}_value`]:
-        //                 attribute_1.textContent
-        //                   .trim()
-        //                   .replace(/(\r\n|\n|\r)/gm, "") || "",
-        //               // attribute_1_name:
-        //               //   config
-        //               //     ?.querySelector("p")
-        //               //     ?.textContent?.trim()
-        //               //     ?.replace(/(\r\n|\n|\r)/gm, "") || "",
-        //               // attribute_1_value:
-        //               //   attribute?.textContent
-        //               //     ?.trim()
-        //               //     ?.replace(/(\r\n|\n|\r)/gm, "") || "",
-        //               // attribute_2_name:
-        //               //   configs[count + 1]
-        //               //     ?.querySelector("p")
-        //               //     ?.textContent?.trim()
-        //               //     ?.replace(/(\r\n|\n|\r)/gm, "") || "",
-        //               // attribute_2_value:
-        //               //   attributes[index + 1]?.textContent
-        //               //     ?.trim()
-        //               //     ?.replace(/(\r\n|\n|\r)/gm, "") || "",
-        //             });
-        //           }
-        //         } else {
-        //           payload.push(configs[count], configs[count + 1]);
-        //           // payload.push({
-        //           //   id: jdex,
-        //           //   sku:
-        //           //     "#" +
-        //           //       document
-        //           //         .querySelector(".blog-middle div.text-12 a")
-        //           //         ?.textContent.trim()
-        //           //         .replace(/(\r\n|\n|\r)/gm, "") || "#PRODUCT",
-        //           //   parent_sku:
-        //           //     "#" +
-        //           //       document
-        //           //         .querySelector(".blog-middle div.text-12 a")
-        //           //         ?.textContent.trim()
-        //           //         .replace(/(\r\n|\n|\r)/gm, "") || "#PRODUCT",
-        //           //   name:
-        //           //     document
-        //           //       .querySelector(".blog-middle h1")
-        //           //       .textContent.trim()
-        //           //       .replace(/(\r\n|\n|\r)/gm, "") || "Updating ...",
-        //           //   regular_price:
-        //           //     document
-        //           //       .querySelector(".pd-price-container b")
-        //           //       .textContent.trim()
-        //           //       .replace(/(\r\n|\n|\r)/gm, "") || "Contact",
-        //           //   description:
-        //           //     document.querySelector(".pro-desc-group")?.innerHTML ||
-        //           //     "No description for this product",
-        //           //   short_description: "No short description for this product",
-        //           //   breadcrumb: [
-        //           //     ...document.querySelectorAll(".global-breadcrumb ol a"),
-        //           //   ]
-        //           //     .map((text) => {
-        //           //       if (text)
-        //           //         return `${text.textContent
-        //           //           .trim()
-        //           //           .replace(/(\r\n|\n|\r)/gm, "")}`;
-        //           //       return "Updating";
-        //           //     })
-        //           //     .toString()
-        //           //     .replaceAll(",", ">"),
-        //           //   images: [
-        //           //     ...document.querySelectorAll(
-        //           //       ".product-detail-group a[data-fancybox='gallery']"
-        //           //     ),
-        //           //   ]
-        //           //     .map((img) => {
-        //           //       if (img) return img.href;
-        //           //       return "Updating";
-        //           //     })
-        //           //     .toString(),
-        //           //   [`attribute_${count}_name`]:
-        //           //     config
-        //           //       .querySelector("p")
-        //           //       .textContent.trim()
-        //           //       .replace(/(\r\n|\n|\r)/gm, "") || "",
-        //           //   [`attribute_${count}_value`]:
-        //           //     attribute.textContent
-        //           //       .trim()
-        //           //       .replace(/(\r\n|\n|\r)/gm, "") || "",
-        //           //   // attribute_1_name:
-        //           //   //   config
-        //           //   //     ?.querySelector("p")
-        //           //   //     ?.textContent?.trim()
-        //           //   //     ?.replace(/(\r\n|\n|\r)/gm, "") || "",
-        //           //   // attribute_1_value:
-        //           //   //   attribute?.textContent
-        //           //   //     ?.trim()
-        //           //   //     ?.replace(/(\r\n|\n|\r)/gm, "") || "",
-        //           //   // attribute_2_name:
-        //           //   //   configs[count + 1]
-        //           //   //     ?.querySelector("p")
-        //           //   //     ?.textContent?.trim()
-        //           //   //     ?.replace(/(\r\n|\n|\r)/gm, "") || "",
-        //           //   // attribute_2_value:
-        //           //   //   attributes[index + 1]?.textContent
-        //           //   //     ?.trim()
-        //           //   //     ?.replace(/(\r\n|\n|\r)/gm, "") || "",
-        //           // });
-        //         }
-        //       }
-        //     }
-        //     return payload;
-        //   }
-        // );
-
-        var variations = await productPage.$$eval(
+        console.log(`\t + Building data ...`);
+        var products = await productPage.$$eval(
           ".pd-config-container",
           (container) => {
             var id = Math.random().toString(36).substring(8);
+            var payload = [];
+
+            var updateObject = {
+              id,
+              sku: `#${
+                document.querySelector(".blog-middle div.text-12 a")
+                  ? document
+                      .querySelector(".blog-middle div.text-12 a")
+                      .textContent.trim()
+                  : "PRODUCT"
+              }`,
+              name: document
+                .querySelector(".blog-middle h1")
+                .textContent.trim(),
+              description: document.querySelector(
+                ".product-info-group .pro-desc-group"
+              ).innerHTML,
+              short_description: "Không có mô tả ngắn cho sản phẩm này.",
+              breadcrumb: [
+                ...document.querySelectorAll(".global-breadcrumb ol a"),
+              ]
+                .map((text) => {
+                  return text.textContent.trim();
+                })
+                .toString(),
+              images: [
+                ...document.querySelectorAll(
+                  ".product-detail-group a[data-fancybox='gallery'"
+                ),
+              ]
+                .map((img) => {
+                  return img.href;
+                })
+                .toString(),
+            };
             var configs = document.querySelectorAll(".pd-config-group");
-            let payload = [];
-            var object = {};
 
-            // for (let i = 0; i < 0; i++) {
-            if (configs.length >= 1) {
-              var attributes_1 = configs[0].querySelectorAll(
+            if (configs.length == 1) {
+              var currentAttr = configs[0].querySelectorAll(
                 ".config-group-holder a"
               );
-              object = {
-                id,
-                sku: `#${
-                  document.querySelector(".blog-middle div.text-12 a")
-                    ? document
-                        .querySelector(".blog-middle div.text-12 a")
-                        .textContent.trim()
-                    : "PRODUCT"
-                }`,
-                name:
-                  document
-                    .querySelector(".blog-middle h1")
-                    ?.textContent.trim() || "Updating ...",
-                description: "No description for this product.",
-                short_description: "No short description for this product.",
-                breadcrumb: [
-                  ...document.querySelectorAll(".global-breadcrumb ol a"),
-                ]
-                  .map((text) => {
-                    if (text) return `${text.textContent.trim()}`;
-                    return "Updating ...";
-                  })
-                  .toString()
-                  .replaceAll(",", ">"),
-                images: [
-                  ...document.querySelectorAll(
-                    ".product-detail-group a[data-fancybox='gallery'"
-                  ),
-                ]
-                  .map((img) => {
-                    if (img) return img.href;
-                    return "Updating ...";
-                  })
-                  .toString(),
-              };
 
-              for (let j = 0; j < attributes_1.length; j++) {
-                attributes_1[j].click();
-
-                object = {
-                  ...object,
-                  attribute_1_value: attributes_1[j].textContent.trim(),
-                  regular_price: document
-                    .querySelector(".pd-price-container b.text-32")
+              for (var x = 0; x < currentAttr.length; x++) {
+                currentAttr[x].click();
+                updateObject = {
+                  ...updateObject,
+                  [`attribute_${0}_value`]: currentAttr[x].textContent.trim(),
+                  [`attribute_${0}_name`]: configs[0]
+                    .querySelector("p.group-title")
                     .textContent.trim(),
                 };
-              }
-            }
-
-            for (var i = 1; i < configs.length; i++) {
-              var attributes_2 = configs[i].querySelectorAll(
-                ".config-group-holder a"
-              );
-              for (let k = 0; k < attributes_2.length; k++) {
-                attributes_2[k].click();
-
-                object = {
-                  ...object,
-                  [`attribute_${i + 1}_value`]:
-                    attributes_2[k].textContent.trim(),
+                payload.push({
                   regular_price: document
-                    .querySelector(".pd-price-container b.text-32")
+                    .querySelector(".pd-price-container b")
                     .textContent.trim(),
-                };
+                  ...updateObject,
+                });
+              }
+            } else if (configs.length > 1) {
+              for (var i = 0; i < configs.length - 1; i++) {
+                var currentAttr = configs[i].querySelectorAll(
+                  ".config-group-holder a"
+                );
+
+                for (var x = 0; x < currentAttr.length; x++) {
+                  currentAttr[x].click();
+                  updateObject = {
+                    ...updateObject,
+                    [`attribute_${i}_value`]: currentAttr[x].textContent.trim(),
+                    [`attribute_${i}_name`]: configs[i]
+                      .querySelector("p.group-title")
+                      .textContent.trim(),
+                  };
+
+                  if (configs.length > 1 && i + 1 < configs.length) {
+                    var nextAttr = configs[i + 1].querySelectorAll(
+                      ".config-group-holder a"
+                    );
+                    for (var y = 0; y < nextAttr.length; y++) {
+                      nextAttr[y].click();
+                      updateObject = {
+                        ...updateObject,
+                        [`attribute_${i + 1}_value`]:
+                          nextAttr[y].textContent.trim(),
+                        [`attribute_${i + 1}_name`]: configs[i + 1]
+                          .querySelector("p.group-title")
+                          .textContent.trim(),
+                      };
+                    }
+                  }
+                }
+                payload.push({
+                  regular_price: document
+                    .querySelector(".pd-price-container b")
+                    .textContent.trim(),
+                  ...updateObject,
+                });
               }
             }
-
-            payload.push(object);
-
-            // if (configs.length > 0) {
-            //   // for (let [index, config] of configs.entries()) {
-            //   //   let attributes = config.querySelectorAll(
-            //   //     ".config-group-holder a"
-            //   //   );
-            //   //   let object = {
-            //   //     id: index,
-            //   //     sku:
-            //   //       `#${document
-            //   //         .querySelector(".blog-middle div.text-12 a")
-            //   //         ?.textContent.trim()}` || "#PRODUCT",
-            //   //     parent_sku:
-            //   //       `#${document
-            //   //         .querySelector(".blog-middle div.text-12 a")
-            //   //         ?.textContent.trim()}` || "#PRODUCT",
-            //   //     name:
-            //   //       document
-            //   //         .querySelector(".blog-middle h1")
-            //   //         ?.textContent.trim() || "Updating ...",
-            //   //     description: "No description for this product.",
-            //   //     short_description: "No short description for this product.",
-            //   //     breadcrumb: [
-            //   //       ...document.querySelectorAll(".global-breadcrumb ol a"),
-            //   //     ]
-            //   //       .map((text) => {
-            //   //         if (text) return `${text.textContent.trim()}`;
-            //   //         return "Updating ...";
-            //   //       })
-            //   //       .toString()
-            //   //       .replaceAll(",", ">"),
-            //   //     images: [
-            //   //       ...document.querySelectorAll(
-            //   //         ".product-detail-group a[data-fancybox='gallery'"
-            //   //       ),
-            //   //     ].map((img) => {
-            //   //       if (img) return img.href;
-            //   //       return "Updating ...";
-            //   //     }),
-            //   //   };
-
-            //   //   // attributes.forEach((attribute, key) => {
-            //   //   //   attribute.click();
-
-            //   //   //   object = {
-            //   //   //     ...object,
-            //   //   //     [`attribute_${index}_name`]: config
-            //   //   //       .querySelector("p")
-            //   //   //       .textContent.trim(),
-            //   //   //     [`attribute_${index}_value`]: attribute.textContent.trim(),
-            //   //   //   };
-            //   //   // });
-
-            //   //   for (let i = 0; i <= attributes.length; i++) {
-            //   //     for (let j = 0; )
-            //   //   }
-            //   //   payload.push(object);
-
-            //   //   // for (let [ydex, attribute_1] of attributes.entries()) {
-            //   //   //   attribute_1.click();
-            //   //   //   object = {
-            //   //   //     ...object,
-            //   //   //     [`attribute_${index}_name`]: config
-            //   //   //       .querySelector("p")
-            //   //   //       .textContent.trim(),
-            //   //   //     [`attribute_${index}_value`]:
-            //   //   //       attribute_1.textContent.trim(),
-            //   //   //   };
-
-            //   //   //   if (configs.length > 1) {
-            //   //   //     // let attributes_1 = ;
-            //   //   //     // object = { attributes_1, key: configs[index + 1], index };
-            //   //   //     for (let [xdex, attribute_2] of config
-            //   //   //       .querySelectorAll(".config-group-holder a")
-            //   //   //       .entries()) {
-            //   //   //       attribute_2.click();
-            //   //   //       object = {
-            //   //   //         ...object,
-            //   //   //         [`attribute_${index}_name`]: config
-            //   //   //           .querySelector("p")
-            //   //   //           .textContent.trim(),
-            //   //   //         [`attribute_${index}_value`]:
-            //   //   //           attribute_2.textContent.trim(),
-            //   //   //       };
-            //   //   //     }
-            //   //   //   }
-
-            //   //   //   object = {
-            //   //   //     ...object,
-            //   //   //     regular_price: document
-            //   //   //       .querySelector(".pd-price-container b")
-            //   //   //       .textContent.trim(),
-            //   //   //   };
-            //   //   //   payload.push(object);
-            //   //   // }
-            //   // }
-            // }
             return payload;
           }
         );
+        console.log(products);
 
-        this.categories[0][index][jdex] = {
-          ...this.categories[0][index][jdex],
-          variations,
-        };
-        console.log(this.categories[0][index][jdex]);
         productPage.close();
         resolve(this.categories[0][index][jdex]);
       });
