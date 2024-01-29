@@ -9,6 +9,7 @@
   "dependencies": {
     "cheerio": "^1.0.0-rc.12",
     "fs": "^0.0.1-security",
+    "json2csv": "^6.0.0-alpha.2",
     "puppeteer": "^21.9.0"
   }
 }
