@@ -15,7 +15,7 @@ const convert2csv = async ({ filename, data }) => {
 
     fs.writeFile(`${filename}.csv`, csv, "utf-8", (error) => {
       if (error) throw error;
-      console.log("\t+ Converted to CSV successfully");
+      return;
     });
   } catch (err) {
     console.error(err);
