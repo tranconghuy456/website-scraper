@@ -1,8 +1,11 @@
 import {
-  // demxanh,
+  demxanh,
   // hoatuoi360,
   // demxanh2,
   uannga,
+  tham,
+  rem,
+  demxinh,
 } from "../helpers/pageScraper.js";
 
 export default async (browserInstance) => {
@@ -10,7 +13,7 @@ export default async (browserInstance) => {
 
   try {
     browser = await browserInstance;
-    await uannga.scrape(browser).then(() => console.log("All done!"));
+    await demxinh.scrape(browser).then(() => console.log("All done!"));
   } catch (error) {
     throw error;
   }
